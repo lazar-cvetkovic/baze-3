@@ -62,6 +62,12 @@
     <Compile Include="Domain\Preduzece.cs" />
     <Compile Include="Domain\UgovorORadu.cs" />
     <Compile Include="Domain\Zaposleni.cs" />
+    <Compile Include="Forms\AddressEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddressPickerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\IIzvestajiView.cs" />
     <Compile Include="Forms\IPreduzecaView.cs" />
     <Compile Include="Forms\IUgovoriView.cs" />
@@ -76,6 +82,12 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="App\AppContext.cs" />
+    <Compile Include="Forms\MestoEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OpstinaEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\PreduzecaUC.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -86,23 +98,35 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Database\DbAdresaRepository.cs" />
     <Compile Include="Repositories\Database\DbIzvestajRepository.cs" />
+    <Compile Include="Repositories\Database\DbMestoRepository.cs" />
+    <Compile Include="Repositories\Database\DbOpstinaRepository.cs" />
     <Compile Include="Repositories\Database\DbPreduzeceRepository.cs" />
     <Compile Include="Repositories\Database\DbUgovorRepository.cs" />
     <Compile Include="Repositories\Database\DbZaposleniRepository.cs" />
+    <Compile Include="Repositories\IAdresaRepository.cs" />
     <Compile Include="Repositories\IIzvestajRepository.cs" />
+    <Compile Include="Repositories\IMestoRepository.cs" />
     <Compile Include="Repositories\InMemory\InMemoryIzvestajRepository.cs" />
     <Compile Include="Repositories\InMemory\InMemoryPreduzeceRepository.cs" />
     <Compile Include="Repositories\InMemory\InMemoryUgovorRepository.cs" />
     <Compile Include="Repositories\InMemory\InMemoryZaposleniRepository.cs" />
+    <Compile Include="Repositories\IOpstinaRepository.cs" />
     <Compile Include="Repositories\IPreduzeceRepository.cs" />
     <Compile Include="Repositories\IUgovorRepository.cs" />
     <Compile Include="Repositories\IZaposleniRepository.cs" />
+    <Compile Include="Services\AdresaService.cs" />
+    <Compile Include="Services\IAdresaService.cs" />
     <Compile Include="Services\IIzvestajiService.cs" />
+    <Compile Include="Services\IMestoService.cs" />
+    <Compile Include="Services\IOpstinaService.cs" />
     <Compile Include="Services\IPreduzecaService.cs" />
     <Compile Include="Services\IUgovoriService.cs" />
     <Compile Include="Services\IZaposleniService.cs" />
     <Compile Include="Services\IzvestajiService.cs" />
+    <Compile Include="Services\MestoService.cs" />
+    <Compile Include="Services\OpstinaService.cs" />
     <Compile Include="Services\PreduzecaService.cs" />
     <Compile Include="Services\UgovoriService.cs" />
     <Compile Include="Services\ZaposleniService.cs" />

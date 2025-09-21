@@ -21,10 +21,10 @@ namespace App.Views
         private readonly TextBox _eSprema;
         private readonly TextBox _ePozicija;
         private readonly NumericUpDown _eRbAdrese;
-        private readonly TextBox _eNazivOpstine;
         private readonly Button _btnAdd;
         private readonly Button _btnEdit;
         private readonly Button _btnDelete;
+        private readonly Button _btnPickAddress;
 
         public event EventHandler LoadRequested;
         public event EventHandler<string> SearchByImeRequested;
@@ -32,6 +32,7 @@ namespace App.Views
         public event EventHandler<Zaposleni> AddRequested;
         public event EventHandler<Zaposleni> EditRequested;
         public event EventHandler<string> DeleteRequested;
+        public event EventHandler PickAddressRequested;
 
         public ZaposleniUC()
         {
@@ -71,10 +72,16 @@ namespace App.Views
             _eSprema = new TextBox();
             _ePozicija = new TextBox();
             _eRbAdrese = new NumericUpDown { Minimum = 0, Maximum = int.MaxValue };
-            _eNazivOpstine = new TextBox();
             _btnAdd = new Button { Text = "Dodaj", Height = 32, Width = 120 };
             _btnEdit = new Button { Text = "Izmeni", Height = 32, Width = 120 };
             _btnDelete = new Button { Text = "Obriši", Height = 32, Width = 120 };
+            _btnPickAddress = new Button { Text = "Adresa...", Width = 90, Height = 24, Margin = new Padding(6, 0, 0, 0) };
+
+            var rbPanel = new FlowLayoutPanel { FlowDirection = FlowDirection.LeftToRight, AutoSize = true };
+            rbPanel.Controls.Add(_eRbAdrese);
+            rbPanel.Controls.Add(_btnPickAddress);
+            ed.Controls.Add(rbPanel, 1, 3);
+
             ed.Controls.Add(new Label { Text = "MBR Zap." }, 0, 0);
             ed.Controls.Add(_eMbr, 1, 0);
             ed.Controls.Add(new Label { Text = "Lična karta" }, 2, 0);
@@ -89,8 +96,6 @@ namespace App.Views
             ed.Controls.Add(_ePozicija, 3, 2);
             ed.Controls.Add(new Label { Text = "Rb adrese" }, 0, 3);
             ed.Controls.Add(_eRbAdrese, 1, 3);
-            ed.Controls.Add(new Label { Text = "Naziv opštine" }, 2, 3);
-            ed.Controls.Add(_eNazivOpstine, 3, 3);
             var buttons = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 40, FlowDirection = FlowDirection.LeftToRight, Padding = new Padding(8) };
             buttons.Controls.Add(_btnAdd);
             buttons.Controls.Add(_btnEdit);
@@ -109,6 +114,8 @@ namespace App.Views
                 var item = CurrentSelection();
                 if (item != null) { DeleteRequested?.Invoke(this, item.MaticniBrojZaposlenog); }
             };
+            _btnPickAddress.Click += (s, e) => PickAddressRequested?.Invoke(this, EventArgs.Empty);
+
             _grid.SelectionChanged += (s, e) => WriteEditor(CurrentSelection());
         }
 
@@ -128,7 +135,6 @@ namespace App.Views
             _eSprema.Text = string.Empty;
             _ePozicija.Text = string.Empty;
             _eRbAdrese.Value = 0;
-            _eNazivOpstine.Text = string.Empty;
         }
 
         public void ShowError(string message)
@@ -147,8 +153,7 @@ namespace App.Views
                 Prezime = _ePrezime.Text,
                 StrucnaSprema = _eSprema.Text,
                 Pozicija = _ePozicija.Text,
-                RbAdrese = Convert.ToInt32(_eRbAdrese.Value),
-                NazivOpstine = _eNazivOpstine.Text
+                RbAdrese = Convert.ToInt32(_eRbAdrese.Value)
             };
             return z;
         }
@@ -163,13 +168,18 @@ namespace App.Views
             _eSprema.Text = z.StrucnaSprema;
             _ePozicija.Text = z.Pozicija;
             _eRbAdrese.Value = Math.Max(0, z.RbAdrese);
-            _eNazivOpstine.Text = z.NazivOpstine;
         }
 
         private Zaposleni CurrentSelection()
         {
             if (_grid.CurrentRow == null) { return null; }
             return _grid.CurrentRow.DataBoundItem as Zaposleni;
+        }
+
+        public void SetAddress(int rbAdrese)
+        {
+            if (InvokeRequired) { Invoke(new Action<int>(SetAddress), rbAdrese); return; }
+            _eRbAdrese.Value = rbAdrese < 0 ? 0 : rbAdrese;
         }
     }
 }

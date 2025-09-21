@@ -12,8 +12,11 @@ namespace App.Views
         event EventHandler<Zaposleni> AddRequested;
         event EventHandler<Zaposleni> EditRequested;
         event EventHandler<string> DeleteRequested;
+        event EventHandler PickAddressRequested;
+
         void Render(IEnumerable<Zaposleni> data);
         void ClearEditor();
         void ShowError(string message);
+        void SetAddress(int rbAdrese);
     }
 }

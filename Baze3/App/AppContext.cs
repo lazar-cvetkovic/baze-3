@@ -29,15 +29,22 @@ namespace Baze3
             var preduzeceRepo = new DbPreduzeceRepository(db);
             var ugovorRepo = new DbUgovorRepository(db);
             var izvestajRepo = new DbIzvestajRepository(db);
+            var adresaRepo = new DbAdresaRepository(db);
+            var mestoRepo = new DbMestoRepository(db);
+            var opstinaRepo = new DbOpstinaRepository(db);
 
             var zaposleniSerivce = new ZaposleniService(zaposleniRepo);
             var preduzeceService = new PreduzecaService(preduzeceRepo);
             var ugovoriService = new UgovoriService(ugovorRepo);
             var izvestajiService = new IzvestajiService(izvestajRepo);
+            var adresaService = new AdresaService(adresaRepo);
+            var opstinaService = new OpstinaService(opstinaRepo);
+            var mestoService = new MestoService(mestoRepo);
 
             var mainForm = new FormView();
 
-            var zaposleniController = new ZaposleniController(mainForm.ZaposleniView, zaposleniSerivce);
+            var zaposleniController = new ZaposleniController(mainForm.ZaposleniView, zaposleniSerivce, 
+                                                              adresaService, opstinaService, mestoService);
             var preduzecaController = new PreduzecaController(mainForm.PreduzecaView, preduzeceService);
             var ugovoriController = new UgovoriController(mainForm.UgovoriView, ugovoriService);
             var izvestajiController = new IzvestajiController(mainForm.IzvestajiView, izvestajiService);

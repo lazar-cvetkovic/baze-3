@@ -38,8 +38,13 @@ namespace Baze3.Repositories.Database
 
         public void Add(Zaposleni z)
         {
-            const string sql = @"INSERT INTO dbo.Zaposleni(MaticniBrojZaposlenog,BrojLicneKarte,Ime,Prezime,StrucnaSprema,Pozicija,RbAdrese,NazivOpstine)
-                                 VALUES(@mbr,@lk,@ime,@prezime,@ss,@poz,@rb,@opst)";
+            const string sql = @"
+                INSERT INTO dbo.Zaposleni
+                    (MaticniBrojZaposlenog, BrojLicneKarte, Ime, Prezime,
+                     StrucnaSprema, Pozicija, RbAdrese)
+                VALUES
+                    (@mbr, @lk, @ime, @prezime, @ss, @poz, @rb);";
+
             _db.Execute(sql, p =>
             {
                 p.AddWithValue("@mbr", z.MaticniBrojZaposlenog);
@@ -49,14 +54,22 @@ namespace Baze3.Repositories.Database
                 p.AddWithValue("@ss", (object)z.StrucnaSprema ?? DBNull.Value);
                 p.AddWithValue("@poz", (object)z.Pozicija ?? DBNull.Value);
                 p.AddWithValue("@rb", z.RbAdrese);
-                p.AddWithValue("@opst", z.NazivOpstine);
             });
         }
 
         public void Update(Zaposleni z)
         {
-            const string sql = @"UPDATE dbo.Zaposleni SET BrojLicneKarte=@lk,Ime=@ime,Prezime=@prezime,StrucnaSprema=@ss,Pozicija=@poz,RbAdrese=@rb,NazivOpstine=@opst
-                                 WHERE MaticniBrojZaposlenog=@mbr";
+            const string sql = @"
+                UPDATE dbo.Zaposleni
+                SET
+                    BrojLicneKarte = @lk,
+                    Ime            = @ime,
+                    Prezime        = @prezime,
+                    StrucnaSprema  = @ss,
+                    Pozicija       = @poz,
+                    RbAdrese       = @rb
+                WHERE MaticniBrojZaposlenog = @mbr;";
+
             _db.Execute(sql, p =>
             {
                 p.AddWithValue("@mbr", z.MaticniBrojZaposlenog);
@@ -66,7 +79,6 @@ namespace Baze3.Repositories.Database
                 p.AddWithValue("@ss", (object)z.StrucnaSprema ?? DBNull.Value);
                 p.AddWithValue("@poz", (object)z.Pozicija ?? DBNull.Value);
                 p.AddWithValue("@rb", z.RbAdrese);
-                p.AddWithValue("@opst", z.NazivOpstine);
             });
         }
 

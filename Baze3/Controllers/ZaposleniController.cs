@@ -1,4 +1,5 @@
 ﻿using App.Views;
+using Baze3.Forms;
 using Baze3.Services;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,20 @@ namespace Baze3.Controllers
     {
         private readonly IZaposleniView _view;
         private readonly IZaposleniService _service;
+        private readonly IAdresaService _adresaService;
+        private readonly IOpstinaService _opstinaService;
+        private readonly IMestoService _mestoService;
 
-        public ZaposleniController(IZaposleniView view, IZaposleniService service)
+        public ZaposleniController(IZaposleniView view, IZaposleniService service,
+                           IAdresaService adresaService,
+                           IOpstinaService opstinaService,
+                           IMestoService mestoService)
         {
-            _view = view;
-            _service = service; Wire();
+            _view = view; _service = service;
+            _adresaService = adresaService;
+            _opstinaService = opstinaService;
+            _mestoService = mestoService;
+            Wire();
         }
 
         private void Wire()
@@ -27,6 +37,18 @@ namespace Baze3.Controllers
             _view.AddRequested += (s, z) => { Try(() => { _service.Create(z); _view.ClearEditor(); _view.Render(_service.GetAll()); }); };
             _view.EditRequested += (s, z) => { Try(() => { _service.Update(z); _view.Render(_service.GetAll()); }); };
             _view.DeleteRequested += (s, mbr) => { Try(() => { _service.Delete(mbr); _view.Render(_service.GetAll()); }); };
+
+            _view.PickAddressRequested += (s, e) => {
+                try
+                {
+                    using (var dlg = new AddressPickerForm(_adresaService, _opstinaService, _mestoService))
+                    {
+                        if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK && dlg.SelectedRbAdrese.HasValue)
+                            _view.SetAddress(dlg.SelectedRbAdrese.Value);
+                    }
+                }
+                catch (Exception ex) { _view.ShowError(ex.Message); }
+            };
         }
 
         private void Try(Action action)

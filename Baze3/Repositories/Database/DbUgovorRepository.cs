@@ -31,27 +31,25 @@ namespace Baze3.Repositories.Database
 
         public void Add(UgovorORadu u)
         {
-            const string sql = "INSERT INTO dbo.UgovorORadu(MaticniBrojZaposlenog,MaticniBrojPreduzeca,DatumZakljucivanja,Aktivan,Naziv) VALUES(@mz,@mp,@dt,@ak,@nz)";
+            const string sql = "INSERT INTO dbo.UgovorORadu(MaticniBrojZaposlenog,MaticniBrojPreduzeca,DatumZakljucivanja,Aktivan) VALUES(@mz,@mp,@dt,@ak)";
             _db.Execute(sql, p =>
             {
                 p.AddWithValue("@mz", u.MaticniBrojZaposlenog);
                 p.AddWithValue("@mp", u.MaticniBrojPreduzeca);
                 p.AddWithValue("@dt", u.DatumZakljucivanja.Date);
                 p.AddWithValue("@ak", u.Aktivan);
-                p.AddWithValue("@nz", u.Naziv);
             });
         }
 
         public void Update(UgovorORadu u)
         {
-            const string sql = "UPDATE dbo.UgovorORadu SET Aktivan=@ak,Naziv=@nz WHERE MaticniBrojZaposlenog=@mz AND MaticniBrojPreduzeca=@mp AND DatumZakljucivanja=@dt";
+            const string sql = "UPDATE dbo.UgovorORadu SET Aktivan=@ak WHERE MaticniBrojZaposlenog=@mz AND MaticniBrojPreduzeca=@mp AND DatumZakljucivanja=@dt";
             _db.Execute(sql, p =>
             {
                 p.AddWithValue("@mz", u.MaticniBrojZaposlenog);
                 p.AddWithValue("@mp", u.MaticniBrojPreduzeca);
                 p.AddWithValue("@dt", u.DatumZakljucivanja.Date);
                 p.AddWithValue("@ak", u.Aktivan);
-                p.AddWithValue("@nz", u.Naziv);
             });
         }
 
