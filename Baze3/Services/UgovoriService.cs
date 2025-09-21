@@ -33,5 +33,8 @@ namespace Baze3.Services
 
             return Encoding.UTF8.GetBytes(sb.ToString());
         }
+
+        public void Open(UgovorORadu u) => _repo.Otvori(u.MaticniBrojZaposlenog, u.MaticniBrojPreduzeca, u.DatumZakljucivanja);
+        public void Close(UgovorORadu u) => _repo.Zatvori(u.MaticniBrojZaposlenog, u.MaticniBrojPreduzeca, u.DatumZakljucivanja);
     }
 }

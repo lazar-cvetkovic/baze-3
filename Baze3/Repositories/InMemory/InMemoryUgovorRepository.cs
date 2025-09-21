@@ -36,7 +36,15 @@ namespace Baze3.Repositories
         }
 
         private static bool SameKey(UgovorORadu a, UgovorORadu b) => a.MaticniBrojZaposlenog == b.MaticniBrojZaposlenog && a.MaticniBrojPreduzeca == b.MaticniBrojPreduzeca && a.DatumZakljucivanja.Date == b.DatumZakljucivanja.Date;
-        
+
         private static UgovorORadu Clone(UgovorORadu u) => new UgovorORadu { MaticniBrojZaposlenog = u.MaticniBrojZaposlenog, MaticniBrojPreduzeca = u.MaticniBrojPreduzeca, DatumZakljucivanja = u.DatumZakljucivanja, Aktivan = u.Aktivan, Naziv = u.Naziv };
+
+        public void Otvori(string mbrZap, string mbrPred, DateTime datum)
+        {
+        }
+
+        public void Zatvori(string mbrZap, string mbrPred, DateTime datum)
+        {
+        }
     }
 }

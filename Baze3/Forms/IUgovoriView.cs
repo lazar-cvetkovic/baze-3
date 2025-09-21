@@ -11,6 +11,9 @@ namespace App.Views
         event EventHandler<UgovorORadu> AddRequested;
         event EventHandler<UgovorORadu> EditRequested;
         event EventHandler<UgovorORadu> DownloadPdfRequested;
+        event EventHandler<UgovorORadu> OpenRequested;
+        event EventHandler<UgovorORadu> CloseRequested;
+
         void Render(IEnumerable<UgovorORadu> data);
         void ClearEditor();
         void ShowError(string message);

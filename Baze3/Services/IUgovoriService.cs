@@ -10,5 +10,7 @@ namespace Baze3.Services
         void Create(UgovorORadu u);
         void Update(UgovorORadu u);
         byte[] GeneratePdf(UgovorORadu u);
+        void Open(UgovorORadu u);
+        void Close(UgovorORadu u);
     }
 }

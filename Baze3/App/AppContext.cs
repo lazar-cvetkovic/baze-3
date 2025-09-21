@@ -1,6 +1,8 @@
 ﻿using App.Views;
 using Baze3.Controllers;
+using Baze3.Database;
 using Baze3.Repositories;
+using Baze3.Repositories.Database;
 using Baze3.Services;
 using System;
 using System.Collections.Generic;
@@ -20,10 +22,13 @@ namespace Baze3
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var zaposleniRepo = new InMemoryZaposleniRepository();
-            var preduzeceRepo = new InMemoryPreduzeceRepository();
-            var ugovorRepo = new InMemoryUgovorRepository();
-            var izvestajRepo = new InMemoryIzvestajRepository();
+            var dbConnectionString = "Data Source=LAKI\\SQLEXPRESS;Initial Catalog=bazeprojekat;Integrated Security=True;";
+            var db = new SqlDatabase(dbConnectionString);
+
+            var zaposleniRepo = new DbZaposleniRepository(db);
+            var preduzeceRepo = new DbPreduzeceRepository(db);
+            var ugovorRepo = new DbUgovorRepository(db);
+            var izvestajRepo = new DbIzvestajRepository(db);
 
             var zaposleniSerivce = new ZaposleniService(zaposleniRepo);
             var preduzeceService = new PreduzecaService(preduzeceRepo);

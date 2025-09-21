@@ -20,12 +20,16 @@ namespace App.Views
         private readonly TextBox _eNaziv;
         private readonly Button _btnAdd;
         private readonly Button _btnEdit;
+        private readonly Button _btnOpen;
+        private readonly Button _btnClose;
 
         public event EventHandler LoadRequested;
         public event EventHandler<string> SearchRequested;
         public event EventHandler<UgovorORadu> AddRequested;
         public event EventHandler<UgovorORadu> EditRequested;
         public event EventHandler<UgovorORadu> DownloadPdfRequested;
+        public event EventHandler<UgovorORadu> OpenRequested;
+        public event EventHandler<UgovorORadu> CloseRequested;
 
         public UgovoriUC()
         {
@@ -39,10 +43,14 @@ namespace App.Views
             _txtSearch = new TextBox { Width = 260 };
             _btnSearch = new Button { Text = "Pretraga", Width = 120 };
             _btnDownload = new Button { Text = "Skini PDF", Width = 120, Margin = new Padding(16, 0, 0, 0) };
+            _btnOpen = new Button { Text = "Otvori", Width = 100, Margin = new Padding(16, 0, 0, 0) };   // NEW
+            _btnClose = new Button { Text = "Zatvori", Width = 100 };
             searchPanel.Controls.Add(new Label { Text = "Pretraga:" });
             searchPanel.Controls.Add(_txtSearch);
             searchPanel.Controls.Add(_btnSearch);
             searchPanel.Controls.Add(_btnDownload);
+            searchPanel.Controls.Add(_btnOpen);
+            searchPanel.Controls.Add(_btnClose);
             layout.Controls.Add(searchPanel, 0, 0);
 
             _grid = new DataGridView { Dock = DockStyle.Fill, ReadOnly = true, SelectionMode = DataGridViewSelectionMode.FullRowSelect, AutoGenerateColumns = true };
@@ -82,7 +90,22 @@ namespace App.Views
             _btnDownload.Click += (s, e) => { var u = CurrentSelection(); if (u != null) { DownloadPdfRequested?.Invoke(this, u); } };
             _btnAdd.Click += (s, e) => AddRequested?.Invoke(this, ReadEditor());
             _btnEdit.Click += (s, e) => EditRequested?.Invoke(this, ReadEditor());
+
+            _btnOpen.Click += (s, e) => { var u = CurrentSelection(); if (u != null) OpenRequested?.Invoke(this, u); };
+            _btnClose.Click += (s, e) => { var u = CurrentSelection(); if (u != null) CloseRequested?.Invoke(this, u); };
+
             _grid.SelectionChanged += (s, e) => WriteEditor(CurrentSelection());
+
+            UpdateButtons();
+        }
+
+        private void UpdateButtons()
+        {
+            var u = CurrentSelection();
+            var isActive = u != null && string.Equals(u.Aktivan, "da", StringComparison.OrdinalIgnoreCase);
+
+            _btnOpen.Enabled = u != null && !isActive;
+            _btnClose.Enabled = u != null && isActive;
         }
 
         public void Render(IEnumerable<UgovorORadu> data)

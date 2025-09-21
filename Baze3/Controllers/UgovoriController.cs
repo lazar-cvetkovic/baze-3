@@ -25,6 +25,8 @@ namespace Baze3.Controllers
             _view.AddRequested += (s, u) => { Try(() => { _service.Create(u); _view.ClearEditor(); _view.Render(_service.GetAll()); }); };
             _view.EditRequested += (s, u) => { Try(() => { _service.Update(u); _view.Render(_service.GetAll()); }); };
             _view.DownloadPdfRequested += (s, u) => { Try(() => SaveBytes("Ugovor_" + Safe(u.Naziv) + ".txt", _service.GeneratePdf(u))); };
+            _view.OpenRequested += (s, u) => { Try(() => { _service.Open(u); _view.Render(_service.GetAll()); }); };
+            _view.CloseRequested += (s, u) => { Try(() => { _service.Close(u); _view.Render(_service.GetAll()); }); };
         }
 
         private void Try(Action action)

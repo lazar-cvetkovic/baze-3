@@ -9,5 +9,7 @@ namespace Baze3.Repositories
         IEnumerable<UgovorORadu> Search(string query);
         void Add(UgovorORadu u);
         void Update(UgovorORadu u);
+        void Otvori(string mbrZap, string mbrPred, System.DateTime datum);
+        void Zatvori(string mbrZap, string mbrPred, System.DateTime datum);
     }
 }
