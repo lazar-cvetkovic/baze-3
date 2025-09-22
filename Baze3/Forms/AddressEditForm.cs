@@ -41,6 +41,11 @@ namespace Baze3.Forms
 
             Controls.Add(t);
 
+            Wire();
+        }
+
+        private void Wire()
+        {
             Shown += (s, e) => LoadOpstine();
             _cbOpstina.SelectedIndexChanged += (s, e) => LoadMesta();
             _btnNovaOpstina.Click += (s, e) => NovaOpstina();

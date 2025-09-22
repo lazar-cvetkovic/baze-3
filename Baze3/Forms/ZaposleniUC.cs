@@ -65,6 +65,7 @@ namespace App.Views
             ed.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             ed.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
             ed.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+
             _eMbr = new TextBox();
             _eLk = new TextBox();
             _eIme = new TextBox();
@@ -96,6 +97,7 @@ namespace App.Views
             ed.Controls.Add(_ePozicija, 3, 2);
             ed.Controls.Add(new Label { Text = "Rb adrese" }, 0, 3);
             ed.Controls.Add(_eRbAdrese, 1, 3);
+
             var buttons = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 40, FlowDirection = FlowDirection.LeftToRight, Padding = new Padding(8) };
             buttons.Controls.Add(_btnAdd);
             buttons.Controls.Add(_btnEdit);
@@ -104,7 +106,13 @@ namespace App.Views
             _editor.Controls.Add(buttons);
             layout.Controls.Add(_editor, 0, 2);
 
+            Wire();
+        }
+
+        private void Wire()
+        {
             Load += (s, e) => LoadRequested?.Invoke(this, EventArgs.Empty);
+
             _btnSearchIme.Click += (s, e) => SearchByImeRequested?.Invoke(this, _txtIme.Text);
             _btnSearchPrezime.Click += (s, e) => SearchByPrezimeRequested?.Invoke(this, _txtPrezime.Text);
             _btnAdd.Click += (s, e) => AddRequested?.Invoke(this, ReadEditor());

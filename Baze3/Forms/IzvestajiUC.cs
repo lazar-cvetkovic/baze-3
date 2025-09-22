@@ -57,16 +57,20 @@ namespace App.Views
             ed.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             ed.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
             ed.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+
             _eMbrZap = new TextBox();
             _eRbIzvestaja = new NumericUpDown { Minimum = 0, Maximum = int.MaxValue };
             _eUkupnoIR = CreateTimePicker();
             _eUkupno = CreateTimePicker();
             _eIme = new TextBox();
+            _eIme.Enabled = false;
             _ePrezime = new TextBox();
+            _ePrezime.Enabled = false;
             _eOpis = new TextBox { Multiline = true, Height = 60, ScrollBars = ScrollBars.Vertical };
             _eNapomena = new TextBox { Multiline = true, Height = 60, ScrollBars = ScrollBars.Vertical };
             _btnAdd = new Button { Text = "Dodaj", Height = 32, Width = 120 };
             _btnEdit = new Button { Text = "Izmeni", Height = 32, Width = 120 };
+
             ed.Controls.Add(new Label { Text = "MBR Zaposlenog" }, 0, 0);
             ed.Controls.Add(_eMbrZap, 1, 0);
             ed.Controls.Add(new Label { Text = "Rb Izveštaja" }, 2, 0);
@@ -83,6 +87,7 @@ namespace App.Views
             ed.Controls.Add(_eOpis, 1, 3);
             ed.Controls.Add(new Label { Text = "Napomena" }, 2, 3);
             ed.Controls.Add(_eNapomena, 3, 3);
+
             var buttons = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 40, Padding = new Padding(8) };
             buttons.Controls.Add(_btnAdd);
             buttons.Controls.Add(_btnEdit);
@@ -90,6 +95,11 @@ namespace App.Views
             _editor.Controls.Add(buttons);
             layout.Controls.Add(_editor, 0, 2);
 
+            Wire();
+        }
+
+        private void Wire()
+        {
             Load += (s, e) => LoadRequested?.Invoke(this, EventArgs.Empty);
             _btnSearch.Click += (s, e) => SearchRequested?.Invoke(this, _txtSearch.Text);
             _btnDownload.Click += (s, e) => { var iz = CurrentSelection(); if (iz != null) { DownloadPdfRequested?.Invoke(this, iz); } };

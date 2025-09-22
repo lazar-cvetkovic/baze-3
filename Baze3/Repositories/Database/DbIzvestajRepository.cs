@@ -37,14 +37,12 @@ namespace Baze3.Repositories.Database
                 {
                     c1.Transaction = tx;
                     c1.CommandText = @"INSERT INTO dbo.IzvestajZaposlenogNaIstrazivanjuIRazvoju
-                                        (RbIzvestaja,UkupnoRadnoVremeNaIstrazivanjuIRazvoju,UkupnoRadnoVreme,MaticniBrojZaposlenog,Ime,Prezime)
-                                        VALUES(@rb,@ir,@uk,@mz,@ime,@prez)";
+                                        (RbIzvestaja,UkupnoRadnoVremeNaIstrazivanjuIRazvoju,UkupnoRadnoVreme,MaticniBrojZaposlenog)
+                                        VALUES(@rb,@ir,@uk,@mz)";
                     c1.Parameters.AddWithValue("@rb", iz.RbIzvestaja);
                     c1.Parameters.AddWithValue("@ir", (object)DatabaseUtils.TimeToHoursNull(iz.UkupnoRadnoVremeNaIstrazivanjuIRazvoju) ?? DBNull.Value);
                     c1.Parameters.AddWithValue("@uk", (object)DatabaseUtils.TimeToHoursNull(iz.UkupnoRadnoVreme) ?? DBNull.Value);
                     c1.Parameters.AddWithValue("@mz", iz.MaticniBrojZaposlenog);
-                    c1.Parameters.AddWithValue("@ime", iz.Ime);
-                    c1.Parameters.AddWithValue("@prez", iz.Prezime);
                     c1.ExecuteNonQuery();
                 }
                 using (var c2 = con.CreateCommand())
@@ -68,14 +66,12 @@ namespace Baze3.Repositories.Database
                     c1.Transaction = tx;
                     c1.CommandText = @"UPDATE dbo.IzvestajZaposlenogNaIstrazivanjuIRazvoju
                                         SET UkupnoRadnoVremeNaIstrazivanjuIRazvoju=@ir,UkupnoRadnoVreme=@uk,
-                                            MaticniBrojZaposlenog=@mz,Ime=@ime,Prezime=@prez
+                                            MaticniBrojZaposlenog=@mz
                                         WHERE RbIzvestaja=@rb";
                     c1.Parameters.AddWithValue("@rb", iz.RbIzvestaja);
                     c1.Parameters.AddWithValue("@ir", (object)DatabaseUtils.TimeToHoursNull(iz.UkupnoRadnoVremeNaIstrazivanjuIRazvoju) ?? DBNull.Value);
                     c1.Parameters.AddWithValue("@uk", (object)DatabaseUtils.TimeToHoursNull(iz.UkupnoRadnoVreme) ?? DBNull.Value);
                     c1.Parameters.AddWithValue("@mz", iz.MaticniBrojZaposlenog);
-                    c1.Parameters.AddWithValue("@ime", iz.Ime);
-                    c1.Parameters.AddWithValue("@prez", iz.Prezime);
                     c1.ExecuteNonQuery();
                 }
                 using (var c2 = con.CreateCommand())

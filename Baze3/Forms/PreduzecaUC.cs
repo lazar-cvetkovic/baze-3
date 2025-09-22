@@ -48,18 +48,21 @@ namespace App.Views
             var ed = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 3, Padding = new Padding(8) };
             ed.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
             ed.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+
             _eMbr = new TextBox();
             _eNaziv = new TextBox();
             _ePib = new TextBox();
             _btnAdd = new Button { Text = "Dodaj", Height = 32, Width = 120 };
             _btnEdit = new Button { Text = "Izmeni", Height = 32, Width = 120 };
             _btnDelete = new Button { Text = "Obriši", Height = 32, Width = 120 };
+
             ed.Controls.Add(new Label { Text = "MBR Preduzeća" }, 0, 0);
             ed.Controls.Add(_eMbr, 1, 0);
             ed.Controls.Add(new Label { Text = "Naziv" }, 0, 1);
             ed.Controls.Add(_eNaziv, 1, 1);
             ed.Controls.Add(new Label { Text = "PIB" }, 0, 2);
             ed.Controls.Add(_ePib, 1, 2);
+
             var buttons = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 40, Padding = new Padding(8) };
             buttons.Controls.Add(_btnAdd);
             buttons.Controls.Add(_btnEdit);
@@ -68,6 +71,11 @@ namespace App.Views
             _editor.Controls.Add(buttons);
             layout.Controls.Add(_editor, 0, 2);
 
+            Wire();
+        }
+
+        private void Wire()
+        {
             Load += (s, e) => LoadRequested?.Invoke(this, EventArgs.Empty);
             _btnSearch.Click += (s, e) => SearchByNazivRequested?.Invoke(this, _txtNaziv.Text);
             _btnAdd.Click += (s, e) => AddRequested?.Invoke(this, ReadEditor());

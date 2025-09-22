@@ -52,6 +52,11 @@ namespace App.Views
             _ucUgovori = new UgovoriUC { Dock = DockStyle.Fill };
             _ucIzvestaji = new IzvestajiUC { Dock = DockStyle.Fill };
 
+            Wire();
+        }
+
+        private void Wire()
+        {
             _btnZaposleni.Click += (s, e) => ShowUc(_ucZaposleni, "Zaposleni");
             _btnPreduzeca.Click += (s, e) => ShowUc(_ucPreduzeca, "Preduzeća");
             _btnUgovori.Click += (s, e) => ShowUc(_ucUgovori, "Ugovori");

@@ -45,6 +45,7 @@ namespace App.Views
             _btnDownload = new Button { Text = "Skini PDF", Width = 120, Margin = new Padding(16, 0, 0, 0) };
             _btnOpen = new Button { Text = "Otvori", Width = 100, Margin = new Padding(16, 0, 0, 0) };   // NEW
             _btnClose = new Button { Text = "Zatvori", Width = 100 };
+
             searchPanel.Controls.Add(new Label { Text = "Pretraga:" });
             searchPanel.Controls.Add(_txtSearch);
             searchPanel.Controls.Add(_btnSearch);
@@ -62,13 +63,16 @@ namespace App.Views
             ed.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             ed.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
             ed.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+
             _eMbrZap = new TextBox();
             _eMbrPred = new TextBox();
             _eDatum = new DateTimePicker { Format = DateTimePickerFormat.Short };
             _eAktivan = new CheckBox { Text = "Aktivan" };
             _eNaziv = new TextBox();
+            _eNaziv.Enabled = false;
             _btnAdd = new Button { Text = "Dodaj", Height = 32, Width = 120 };
             _btnEdit = new Button { Text = "Izmeni", Height = 32, Width = 120 };
+
             ed.Controls.Add(new Label { Text = "MBR Zaposlenog" }, 0, 0);
             ed.Controls.Add(_eMbrZap, 1, 0);
             ed.Controls.Add(new Label { Text = "MBR Preduzeća" }, 2, 0);
@@ -78,6 +82,7 @@ namespace App.Views
             ed.Controls.Add(new Label { Text = "Naziv" }, 2, 1);
             ed.Controls.Add(_eNaziv, 3, 1);
             ed.Controls.Add(_eAktivan, 1, 2);
+
             var buttons = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 40, Padding = new Padding(8) };
             buttons.Controls.Add(_btnAdd);
             buttons.Controls.Add(_btnEdit);
@@ -85,6 +90,12 @@ namespace App.Views
             _editor.Controls.Add(buttons);
             layout.Controls.Add(_editor, 0, 2);
 
+            Wire();
+            UpdateButtons();
+        }
+
+        private void Wire()
+        {
             Load += (s, e) => LoadRequested?.Invoke(this, EventArgs.Empty);
             _btnSearch.Click += (s, e) => SearchRequested?.Invoke(this, _txtSearch.Text);
             _btnDownload.Click += (s, e) => { var u = CurrentSelection(); if (u != null) { DownloadPdfRequested?.Invoke(this, u); } };
@@ -95,8 +106,6 @@ namespace App.Views
             _btnClose.Click += (s, e) => { var u = CurrentSelection(); if (u != null) CloseRequested?.Invoke(this, u); };
 
             _grid.SelectionChanged += (s, e) => WriteEditor(CurrentSelection());
-
-            UpdateButtons();
         }
 
         private void UpdateButtons()
